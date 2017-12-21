@@ -15,6 +15,7 @@ gettype($date); //вывод типа данных
 /*  1 - integer  PHP_INT_MAX
     2 - double   1.8E+307
     3 - string
+    3 - string
     4 - array (асоциативный масив  ключ => значения)
     5 - object (ссылка на обект)
     6 - resource (ресурс - например дескриптор открытого файла)
