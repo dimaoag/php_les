@@ -1,9 +1,2 @@
-.idea
-
-regular_validation/composer.json
-regular_validation/composer.lock
-regular_validation/vendor
-
-Email/composer.json
-Email/composer.lock
-Email/vendor
+/vendor
+composer.lock
