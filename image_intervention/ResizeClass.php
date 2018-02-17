@@ -17,7 +17,7 @@ class ResizeClass
     const HEIGHT = 100;
 
     const IMAGE_TYPE_DEFAULT = '.jpg';
-    const DIR_SAVE = 'images';
+    const DIR_SAVE = 'images/';
 
     ///////const///////
 
@@ -77,6 +77,87 @@ class ResizeClass
         $this->height = imagesy($this->imageSource);
     }
 
+
+    /**
+     * @param int $newWidth
+     * @param int $newHeight
+     * @param string $option
+     */
+
+    public function resize($newWidth = self::WIDTH, $newHeight = self::HEIGHT, $option = 'width'){
+
+        $arr = $this->getSizes($newWidth, $newHeight, $option);
+
+        $this->imageResult = imagecreatetruecolor(round($arr['width']), round($arr['height']));
+
+        imagecopyresampled($this->imageResult, $this->imageSource, 0, 0, 0, 0,
+            round($arr['width']), round($arr['height']), $this->width, $this->height);
+
+        if ($option == 'crop'){
+
+            $w = round($arr['width']);
+            $h = round($arr['height']);
+
+            $sx = ($w/2) - ($newWidth/2);
+            $sy = ($h/2) - ($newHeight/2);
+
+            $img = imagecreatetruecolor($newWidth, $newHeight);
+            imagecopyresampled($img, $this->imageResult, 0, 0, $sx, $sy,
+                $newWidth, $newHeight, $newWidth, $newHeight);
+
+            $this->imageResult = $img;
+        }
+
+    }
+
+
+    /**
+     * @param bool $pathImage
+     * @param int $quality
+     */
+
+    public function save($pathImage = false, $quality = 100){
+
+        if (!$pathImage){
+            $str = md5(microtime());
+            $name = substr($str, 0, 10);
+            $ext = self::IMAGE_TYPE_DEFAULT;
+            $pathImage = $name . $ext;
+
+        } else {
+            $ext = strtolower(strrchr($pathImage, '.'));
+        }
+
+        switch ($ext){
+
+            case '.jpg':
+                imagejpeg($this->imageResult, self::DIR_SAVE . $pathImage, $quality);
+                break;
+
+            case '.png':
+                $quality = round(($quality * 9) / 100);
+                $quality = 9 - $quality;
+                imagepng($this->imageResult, self::DIR_SAVE . $pathImage, $quality);
+                break;
+
+            case '.gif':
+                imagegif($this->imageResult, self::DIR_SAVE . $pathImage);
+                break;
+
+            case '.bmp':
+                imagewbmp($this->imageResult, self::DIR_SAVE . $pathImage);
+                break;
+
+            imagedestroy($this->imageSource);
+            imagedestroy($this->imageResult);
+
+        }
+
+
+    }
+
+
+
     /**
      * @param $pathToImage
      * @return int
@@ -92,18 +173,12 @@ class ResizeClass
 
 
 
-
-
-    public function resize($newWidth = self::WIDTH, $newHeight = self::HEIGHT, $option = 'width'){
-
-        $arr = $this->getSizes($newWidth, $newHeight, $option);
-
-
-
-
-    }
-
-
+    /**
+     * @param $newWidth
+     * @param $newHeight
+     * @param $option
+     * @return array
+     */
 
     private function getSizes($newWidth, $newHeight, $option){
 
@@ -137,7 +212,7 @@ class ResizeClass
                 break;
         }
 
-        return ['width' => $width, 'height' => $height];
+        return array('width' => $width, 'height' => $height);
 
     }
 
