@@ -84,6 +84,15 @@ class ResizeClass
      * @param string $option
      */
 
+    /*
+    $option =
+        'width'
+        'height'
+        'auto'
+        'crop'  //обрезка краев
+        'exact' //статика
+    */
+
     public function resize($newWidth = self::WIDTH, $newHeight = self::HEIGHT, $option = 'width'){
 
         $arr = $this->getSizes($newWidth, $newHeight, $option);

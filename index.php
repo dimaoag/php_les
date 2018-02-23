@@ -192,6 +192,7 @@ foreach ($birth as $k => $v)
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
     <title>Document</title>
 </head>
 <body>
@@ -200,7 +201,8 @@ foreach ($birth as $k => $v)
 
     <?php if(!isset($_REQUEST['doGo'])) {?>
         <form action="<?php echo $_SERVER['SCRIPT_NAME']?>">
-            Login: <input type="text" name="login" value="">
+            <label for="login" class="lab_login">Login: </label>
+             <input class="login" type="text" name="login" value="" id="login">
             Password: <input type="password" name="password" value="">
             <select name="Sel[]" multiple>
                 <option>First</option>
