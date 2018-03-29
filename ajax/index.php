@@ -15,7 +15,7 @@
 <body>
     <h1>Ajax example</h1>
     <p>Your name</p>
-    <input type="text" id="intup1">
+    <input type="text" id="intup1" >
     <br><br>
     <p id="hello"></p>
     <br>
